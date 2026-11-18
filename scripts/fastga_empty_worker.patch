@@ -1,0 +1,12 @@
+--- a/FastGA.c
++++ b/FastGA.c
+@@ -3844,7 +3844,8 @@
+   void     *iblock, *off;
+   Overlap **perm;
+   int       j, tmaxl;
+-  
++
++  parm->tmaxl = 0;  // initialize even when this worker has no overlaps
+   if (novl == 0)
+     return (NULL);
+ 

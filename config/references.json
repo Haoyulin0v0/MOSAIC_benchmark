@@ -1,0 +1,54 @@
+{
+  "materials": [
+    {
+      "id": "bsub",
+      "accession": "GCF_000009045.1",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/009/045/GCF_000009045.1_ASM904v1/GCF_000009045.1_ASM904v1_genomic.fna.gz",
+      "compressed_sha256": "1a9e4f66533db783e9ecb6727355993a16a00ef36fa512dcac2de39eff1ae8c5",
+      "fasta_sha256": "59c09816fb55fb1a0b42d0715f627bb42018a19c6bf933c9cb37f6058ee4737e"
+    },
+    {
+      "id": "pombe",
+      "accession": "GCF_000002945.2",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/945/GCF_000002945.2_ASM294v3/GCF_000002945.2_ASM294v3_genomic.fna.gz",
+      "compressed_sha256": "5fad3e62e78d864750a0a22e399b5f059128446762aa71a705e75f5f8fb49fee",
+      "fasta_sha256": "fc3a90996a09d653880aea616e235c878a3224eb678f9d5f099b9d4821b29762"
+    },
+    {
+      "id": "dmel",
+      "accession": "GCF_000001215.4",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/215/GCF_000001215.4_Release_6_plus_ISO1_MT/GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna.gz",
+      "compressed_sha256": "e69e907b5e87ce756236dcef93e82001cfd08f1a0ed5f22e36cbbd3a87ebc57d",
+      "fasta_sha256": "4e14dbd8ea213a19ebf27057ab62a57ca83951e79ae0c2501ae4c460b7c3d415"
+    },
+    {
+      "id": "zebrafish",
+      "accession": "GCF_000002035.6",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/035/GCF_000002035.6_GRCz11/GCF_000002035.6_GRCz11_genomic.fna.gz",
+      "compressed_sha256": "8f8d8c4fcc73f8e7f4b8557ba1db0025e853c94226254b181c8b09c6d765b57a",
+      "fasta_sha256": "c0a6e6ab81b3208d33bf736eb42fa93fe0af7d9e290cf65c63a5f0e6f07f9dcd"
+    },
+    {
+      "id": "mouse",
+      "accession": "ucsc_mm39",
+      "url": "https://hgdownload.soe.ucsc.edu/goldenPath/mm39/bigZips/mm39.fa.gz",
+      "compressed_sha256": "e558d498b49ee50b2ae14262f65c55b0feae733e833d1f4f0da0c0b789fffe59",
+      "fasta_sha256": "34a1e72bb3edce582b3d5ab40fc6082039ac24fd40cf6472d73a69284c60a2b4"
+    },
+    {
+      "id": "human",
+      "accession": "GCF_000001405.40",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.fna.gz",
+      "compressed_sha256": "11912a45a545bf01a10b2a7f10eb7a42924436b4d19b476b1899834fb7ba74a3",
+      "record": "NC_000022.11"
+    },
+    {
+      "id": "arabidopsis",
+      "accession": "GCF_000001735.4",
+      "url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/735/GCF_000001735.4_TAIR10.1/GCF_000001735.4_TAIR10.1_genomic.fna.gz",
+      "compressed_sha256": "a182f3c71662973dc636cacd7722588c9bbe3c8ea6ce62b1bae7dac940545d47",
+      "fasta_sha256": "de99316d1d5597e9a5d40d943ff919c17d59b77116354a5d388b183b6f21075f"
+    }
+  ],
+  "provenance": "Public source URLs and SHA256 copied from the registered shared-reference catalog; no genome data included"
+}
