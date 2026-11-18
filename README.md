@@ -23,10 +23,12 @@ production benchmark has already run. Start with the synthetic demo.
 - 936,000 nonperfect short queries and24,000 canonical perfect controls before
   exact-sequence aliases. P100 records stand for the identical U/C/I controls;
   perfect controls do not enter the mutation macro average.
-- Background confirmation uses150/1000bp,60/80/94%, all models and references,
-  and200 preselected loci per reference/length. Four distinct loci per sample,
-  10,000bp total native Arabidopsis background: **5400 long samples**, with
-  21,600 planted target instances per tool. Their short counterparts are reused.
+- Background confirmation uses 150 and 1,000 bp at 50%, 60%, 70%, 80%, 90%,
+  and 94% identity. Each reference × length × edit model × identity condition
+  uses all 1,000 distinct source loci, with four targets per composite and
+  10,000 bp of native *Arabidopsis* background. The design yields **54,000
+  composite queries** and 216,000 target evaluations per eligible tool. Their
+  short counterparts come from the same benchmark inputs.
 - Exactly two conditions, `short` and `native`. **No shuffled/Euler background**.
 
 The main outcome is `region90`: both query-fragment and reference-source coverage

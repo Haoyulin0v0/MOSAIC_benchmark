@@ -115,10 +115,16 @@ def load_config(path):
     if 100 not in c['identities']:
         raise ValueError('P100 source controls are mandatory')
     b = c["background"]
-    if b["selected_loci_per_reference_length"] > n or b["selected_loci_per_reference_length"] % b["targets_per_sample"]:
+    quota = b["selected_loci_per_reference_length"]
+    k = b["targets_per_sample"]
+    if type(quota) is not int or type(k) is not int or not 0 < k <= quota <= n or quota % k:
         raise ValueError("Background quota must fit and be divisible by K")
+    if not b["identities"] or len(set(b["identities"])) != len(b["identities"]) or 100 in b["identities"]:
+        raise ValueError("Background identities must be distinct nonperfect levels")
     if not set(b["lengths"]) <= set(c["lengths"]) or not set(b["identities"]) <= set(c["identities"]):
         raise ValueError("Background axes must be a subset of the short-query bank")
+    if c.get("profile") == "production" and (quota != n or len(b["identities"]) < 6):
+        raise ValueError("Production background uses all 1000 loci per condition and at least six identity levels")
     if c["batch"]["short"] < 1 or c["batch"]["native"] < 1:
         raise ValueError("Positive batch sizes required")
     return c

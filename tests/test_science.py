@@ -6,7 +6,7 @@ import unittest
 
 from mosaic_benchmark.alignment import Alignment, parse
 from mosaic_benchmark.common import load_config, random_stream, rc, read_fasta, read_json, write_fasta
-from mosaic_benchmark.dataset import prepare, batches, batch_paths, verify_dataset
+from mosaic_benchmark.dataset import prepare, batches, batch_paths, cases, verify_dataset
 from mosaic_benchmark.evaluate import score
 from mosaic_benchmark.fasta import Fasta
 from mosaic_benchmark.models import mutate
@@ -100,6 +100,24 @@ class ScienceTests(unittest.TestCase):
         qp.write_text(qp.read_text()+'\n')
         with self.assertRaises(RuntimeError):
             verify_dataset(c, full=True)
+
+    def test_production_background_covers_six_identities_and_full_locus_cohorts(self):
+        config_path = Path(__file__).resolve().parents[1] / 'config/benchmark.json'
+        config = load_config(config_path)
+        native = [case for case in cases(config) if case['context'] == 'native']
+        self.assertEqual({case['identity'] for case in native}, {50, 60, 70, 80, 90, 94})
+        self.assertEqual(len(native), 216)
+        self.assertTrue(all(case['records'] == 250 for case in native))
+        self.assertEqual(sum(case['records'] for case in native), 54000)
+        original = read_json(config_path)
+        for identities, count in [([60, 80, 94], 1000), ([50, 60, 70, 80, 90, 94], 200)]:
+            with self.subTest(identities=identities, count=count):
+                original['background'].update(identities=identities,
+                                              selected_loci_per_reference_length=count)
+                path = self.base / 'invalid.json'
+                path.write_text(json.dumps(original))
+                with self.assertRaisesRegex(ValueError, 'at least six identity levels'):
+                    load_config(path)
 
     def test_region_clipping_whole_hsp_and_wrong_strand(self):
         t = dict(query_id='q', record='r', strand='+', qstart=50, qend=150,

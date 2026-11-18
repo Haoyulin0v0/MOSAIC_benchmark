@@ -105,14 +105,17 @@
     },
     "total_bp": 10000,
     "targets_per_sample": 4,
-    "selected_loci_per_reference_length": 200,
+    "selected_loci_per_reference_length": 1000,
     "lengths": [
       150,
       1000
     ],
     "identities": [
+      50,
       60,
+      70,
       80,
+      90,
       94
     ]
   },

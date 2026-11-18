@@ -88,17 +88,20 @@ constructing the generating path; all reference coordinates remain forward,
 All isolated target sequences are individual FASTA records, possibly batched in
 one invocation. They are never implicitly concatenated for the short task.
 
-From each reference's150/1000bp cohort, a fixed random permutation selects200 loci,
-then partitions them into50 consecutive groups of four. The same source groups
-are used at60/80/94% under U/C/I. Draw five native Arabidopsis blocks, each2000bp,
+For each reference and each of the two target lengths (150 and 1,000 bp), a fixed
+random permutation partitions all 1,000 loci into 250 consecutive groups of four.
+The same source groups are used at 50%, 60%, 70%, 80%, 90%, and 94% under U/C/I.
+Draw five native Arabidopsis blocks, each 2,000 bp,
 and construct B0–q1–B1–q2–B2–q3–B3–q4–B4. Raw background is uppercased in queries;
 original donor/reference bytes and masks are preserved and fingerprinted. Save
 donor record/coordinates, group seed, and all embedded target positions.
 
 Background length B is10,000bp, not total query length. S=B+sum(actual_target_length):
 10,600bp for four150bp substitution targets and14,000bp for four1000bp targets.
-Indels adjust S using actual query lengths. There are5400 samples and21,600 target
-evaluations per tool. The short counterpart already exists in the primary bank.
+Indels adjust S using actual query lengths. There are 54,000 composite queries and
+216,000 target evaluations per eligible tool. The matching short queries are
+already in the primary bank. The 250 composite queries per condition contain
+1,000 target realizations, each derived from a distinct locus within that condition.
 
 Donor is not added to the search reference. Different species do not certify the
 absence of homology. There is no new randomized-background condition. Consequently
