@@ -1,0 +1,42 @@
+name: reproducible-workflow
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  science:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install '.[workflow]'
+      - run: python -m unittest discover -s tests -v
+      - run: mosaic plan --config config/benchmark.json
+  native-six-tools:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y minimap2 last-align lastz ncbi-blast+ bowtie zlib1g-dev
+      - run: python -m pip install '.[workflow]'
+      - run: bash scripts/build_fastga.sh
+      - run: echo "$PWD/tools/fastga" >> "$GITHUB_PATH"
+      - run: python scripts/make_demo.py --directory work/demo
+      - run: mosaic run --config work/demo/config.json --dry-run
+      - run: mosaic run --config work/demo/config.json --foreground
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-interface-evidence
+          path: |
+            work/demo/run/execution*.json
+            work/demo/run/execution.log
+            work/demo/run/toolchain.json
+            work/demo/run/budget.json
+            work/demo/run/summary/

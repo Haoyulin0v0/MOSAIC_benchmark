@@ -1,0 +1,63 @@
+"""One DAG: inputs -> tool/index inventory -> perfect gates -> maps -> scores."""
+from pathlib import Path
+from mosaic_benchmark.common import load_config, root
+from mosaic_benchmark.dataset import prepare, batches, batch_paths
+from mosaic_benchmark.native import doctor, build_index, map_job, perfect_gate
+from mosaic_benchmark.evaluate import evaluate_job
+from mosaic_benchmark.report import summarize as build_summary
+
+C = load_config(workflow.configfiles[0])
+W = str(root(C))
+BATCHES = {b['id']: b for b in batches(C)}
+TOOLS = C['enabled_tools']
+REFS = [r['id'] for r in C['references']]
+PERFECT = {r: [b['id'] for b in BATCHES.values() if b['reference_id'] == r and b['model'] == 'P'] for r in REFS}
+
+rule all:
+    input: W + '/summary/summary.json'
+
+rule prepare_inputs:
+    input: [r['fasta'] for r in C['references']] + [C['background']['donor']['fasta']]
+    output: W + '/dataset/manifest.json'
+    run: prepare(C)
+
+rule inventory:
+    output: W + '/toolchain.json'
+    run: doctor(C)
+
+rule index_reference:
+    input: W + '/dataset/manifest.json', W + '/toolchain.json'
+    output: W + '/indexes/{reference}/{tool}/manifest.json'
+    resources: native_slot=1
+    threads: C['resources']['threads']
+    run: build_index(C, wildcards.tool, wildcards.reference)
+
+def mapping_dependencies(wc):
+    b = BATCHES[wc.batch]
+    dependencies = [W + '/dataset/manifest.json', W + '/toolchain.json',
+                    W + f"/indexes/{b['reference_id']}/{wc.tool}/manifest.json"]
+    if b['model'] != 'P':
+        dependencies.append(W + f"/gates/{wc.tool}_{b['reference_id']}.json")
+    return dependencies
+
+rule map_batch:
+    input: mapping_dependencies
+    output: W + '/runs/{tool}/{batch}/run.json'
+    resources: native_slot=1
+    threads: C['resources']['threads']
+    run: map_job(C, wildcards.tool, BATCHES[wildcards.batch])
+
+rule evaluate_batch:
+    input: W + '/runs/{tool}/{batch}/run.json'
+    output: W + '/runs/{tool}/{batch}/evaluation.json'
+    run: evaluate_job(C, wildcards.tool, BATCHES[wildcards.batch])
+
+rule perfect_controls:
+    input: lambda wc: [W + f'/runs/{wc.tool}/{b}/evaluation.json' for b in PERFECT[wc.reference]]
+    output: W + '/gates/{tool}_{reference}.json'
+    run: perfect_gate(C, wildcards.tool, wildcards.reference)
+
+rule summarize:
+    input: [W + f'/runs/{tool}/{bid}/evaluation.json' for tool in TOOLS for bid in BATCHES]
+    output: W + '/summary/summary.json'
+    run: build_summary(C)

@@ -1,0 +1,143 @@
+{
+  "profile": "production",
+  "work_dir": "work/benchmark",
+  "seed": 2026111201,
+  "statistical_seed": 2026111202,
+  "references": [
+    {
+      "id": "bsub",
+      "fasta": "data/bsub.fa",
+      "accession": "GCF_000009045.1",
+      "scope": "full_registered_assembly",
+      "sha256": "59c09816fb55fb1a0b42d0715f627bb42018a19c6bf933c9cb37f6058ee4737e"
+    },
+    {
+      "id": "pombe",
+      "fasta": "data/pombe.fa",
+      "accession": "GCF_000002945.2",
+      "scope": "full_registered_assembly",
+      "sha256": "fc3a90996a09d653880aea616e235c878a3224eb678f9d5f099b9d4821b29762"
+    },
+    {
+      "id": "dmel",
+      "fasta": "data/dmel.fa",
+      "accession": "GCF_000001215.4",
+      "scope": "full_registered_assembly",
+      "sha256": "4e14dbd8ea213a19ebf27057ab62a57ca83951e79ae0c2501ae4c460b7c3d415"
+    },
+    {
+      "id": "zebrafish",
+      "fasta": "data/zebrafish.fa",
+      "accession": "GCF_000002035.6",
+      "scope": "full_registered_assembly",
+      "sha256": "c0a6e6ab81b3208d33bf736eb42fa93fe0af7d9e290cf65c63a5f0e6f07f9dcd"
+    },
+    {
+      "id": "mouse",
+      "fasta": "data/mouse.fa",
+      "accession": "ucsc_mm39",
+      "scope": "full_registered_assembly",
+      "sha256": "34a1e72bb3edce582b3d5ab40fc6082039ac24fd40cf6472d73a69284c60a2b4"
+    },
+    {
+      "id": "human",
+      "fasta": "data/human.fa",
+      "accession": "GCF_000001405.40",
+      "scope": "one_complete_chromosome",
+      "record": "NC_000022.11"
+    }
+  ],
+  "lengths": [
+    150,
+    250,
+    500,
+    1000
+  ],
+  "identities": [
+    50,
+    55,
+    60,
+    65,
+    70,
+    75,
+    80,
+    85,
+    90,
+    92,
+    94,
+    96,
+    98,
+    100
+  ],
+  "models": [
+    "U",
+    "C",
+    "I"
+  ],
+  "contexts": [
+    "short",
+    "native"
+  ],
+  "loci_per_reference_length": 1000,
+  "nonoverlapping_loci": true,
+  "sampling_attempt_limit": 100000,
+  "clustered": {
+    "h_percent": 50,
+    "a_percent": 80,
+    "w_percent": 10
+  },
+  "enabled_tools": [
+    "minimap2",
+    "last",
+    "lastz",
+    "blastn",
+    "fastga",
+    "bowtie"
+  ],
+  "executables": {},
+  "fastga_build_label": "compatibility_tmaxl_init_178afcbba2f79abc1686e3bd2b8a916969467e83",
+  "background": {
+    "donor": {
+      "id": "arabidopsis",
+      "fasta": "data/arabidopsis.fa",
+      "accession": "GCF_000001735.4",
+      "sha256": "de99316d1d5597e9a5d40d943ff919c17d59b77116354a5d388b183b6f21075f"
+    },
+    "total_bp": 10000,
+    "targets_per_sample": 4,
+    "selected_loci_per_reference_length": 1000,
+    "lengths": [
+      150,
+      1000
+    ],
+    "identities": [
+      50,
+      60,
+      70,
+      80,
+      90,
+      94
+    ]
+  },
+  "batch": {
+    "short": 64,
+    "native": 1
+  },
+  "metrics": {
+    "minimum_paired_bp": 100,
+    "coverage": 0.9,
+    "minimum_gate_scope": "whole_native_alignment_before_truth_rectangle",
+    "threshold_status": "candidate_requires_sensitivity_confirmation"
+  },
+  "resources": {
+    "threads": 4,
+    "cpu_affinity": null,
+    "memory_gib": 64,
+    "mapping_timeout_seconds": 120,
+    "index_timeout_seconds": 1800,
+    "conversion_timeout_seconds": 120,
+    "output_limit_mib": 256,
+    "index_output_limit_mib": 8192,
+    "total_native_budget_seconds": 259200
+  }
+}

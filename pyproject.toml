@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mosaic-benchmark"
+version = "0.1.0"
+description = "Truth-labeled DNA alignment benchmark with distinct genomic loci"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+workflow = ["snakemake==9.26.1"]
+plots = ["matplotlib>=3.8,<4"]
+
+[project.scripts]
+mosaic = "mosaic_benchmark.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"share/mosaic-benchmark/workflow" = ["workflow/Snakefile"]
